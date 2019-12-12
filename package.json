@@ -1,0 +1,63 @@
+{
+  "name": "beetbook",
+  "productName": "BeetBook",
+  "version": "1.0.0",
+  "description": "An address book",
+  "main": "frontend/main.js",
+  "scripts": {
+    "start": "source env/bin/activate && electron-forge start",
+    "pythonPack": "source env/bin/activate && pyinstaller -F ./backend/api.py --distpath ./pythondist && rm -rf ./build/ && rm -f ./api.spec",
+    "package": "electron-forge package",
+    "dev-install-unix": "yarn install --frozen-lockfile && python3 -m venv env && source env/bin/activate && pip install -r ./backend/requirements.txt",
+    "make": "yarn run pythonPack && electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "yarn run standard \"frontend/**.js\""
+  },
+  "repository": "https://bitbucket.org/cis422f19team4/project1",
+  "author": "CIS422-Team4",
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "./docs/img/BeetBookIcon"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "BeetBook",
+            "iconURL": "https://ix.cs.uoregon.edu/~mhernan7/BeetBookIcon.ico",
+            "loadingGif": "./docs/img/loadingGif.gif"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-dmg",
+          "platforms": [
+            "darwin"
+          ],
+          "config": {
+            "name": "BeetBook",
+            "icon": "./docs/img/BeetBookIcon.icns"
+          }
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "6.0.0-beta.45",
+    "@electron-forge/maker-dmg": "6.0.0-beta.45",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.45",
+    "@electron-forge/maker-zip": "6.0.0-beta.45",
+    "electron": "7.0.0",
+    "standard": "^14.3.1"
+  },
+  "standard": {
+    "globals": [
+      "fetch"
+    ]
+  }
+}

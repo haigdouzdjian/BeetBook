@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+        }
+        
+        .app-title {
+            font-weight: 900;
+            letter-spacing: 15px;
+        }
+        
+        .header-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            height: 30vh;
+            background-color: #9371E6;
+            margin: none;
+        }
+        
+        .top-layer {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2.5vw 5vw;
+            color: #ffffff;
+        }
+        /* a:link {
+            color: #ffffff;
+        } */
+        
+        .book-info-container {
+            color: #ffffff;
+            padding: 0 25vw;
+        }
+        
+        .book-title-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        
+        .book-title {
+            margin-bottom: 7.5px;
+            font-weight: 700;
+            border-bottom: 5px solid transparent;
+            color: #ffffff;
+        }
+        
+        .body-wrapper {
+            display: flex;
+            flex-direction: column;
+            padding: 0 25vw;
+        }
+        
+        .names-wrapper {
+            border-top: 2px solid #F4F4F4;
+        }
+        
+        .name-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 1vh 0;
+            border-bottom: 2px solid #F4F4F4;
+            align-items: center;
+        }
+        
+        .edit-hover {
+            display: none;
+        }
+        
+        #title-edit-hover {
+            padding: 1vh 0 0 4vw;
+        }
+        
+        .name {
+            border-bottom: 3.25px solid transparent;
+            color: #666666;
+            font-weight: 400;
+        }
+        
+        .name-container:hover {
+            cursor: pointer;
+        }
+        
+        .name-container:hover > .edit-hover {
+            display: block;
+        }
+        
+        .name-container:hover > .name {
+            border-bottom: 3.25px solid #FED4E0;
+        }
+        
+        .add-icon {
+            padding: 1.75vh 0;
+            color: #666666;
+            cursor: pointer;
+        }
+        
+        .add-attribute-icon {
+            visibility: hidden;
+            margin: 1vh 0;
+            color: #666666;
+            cursor: pointer;
+        }
+        
+        .book-info-specs {
+            font-weight: 400;
+        }
+        
+        .contact-edit {
+            color: #666666;
+        }
+        
+        .footer-wrapper {
+            width: 100vw;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding-top: 2vh;
+        }
+        
+        .company-copyright {
+            color: #A8A8A8;
+        }
+        
+        .modal-box {
+            position: fixed;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+        }
+        
+        .modal-box:target {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .modal-box > div {
+            width: 60vw;
+            height: 50vh;
+            position: relative;
+            margin: 10% auto;
+            padding: 5px;
+            background: #fff;
+        }
+        
+        a {
+            text-decoration: none;
+            /* added the color change to help with clickable book icon in top right */
+            color: #ffffff;
+        }
+        
+        .modal-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .modal-close {
+            width: 85%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .contact-title {
+            font-weight: 700;
+            border-bottom: 3.75px solid #FED4E0;
+        }
+        
+        .contact-form-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1.5vh;
+            width: 80%;
+        }
+        
+        .contact-info-input {
+            height: 17.5px;
+            border-color: transparent;
+            user-select: none;
+            color: #000000;
+        }
+        
+        .contact-info-input-static {
+            height: 17.5px;
+            border-color: transparent;
+            user-select: none;
+            color: #000000;
+        }
+        
+        .input-color {
+            border-color: rgba(0, 0, 0, 0.05);
+            user-select: auto;
+        }
+        
+        .contact-input {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        
+        p {
+            font-size: 11px;
+            color: #666666;
+            padding-right: 1vw;
+        }
+        
+        .contact-tandem-input {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .tandem-input {
+            justify-content: space-between;
+        }
+        
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 35%;
+            padding-top: 2vh;
+        }
+        
+        .button-layout {
+            color: #000000;
+            letter-spacing: 2.5px;
+            padding: 1vh 1.5vw;
+            border: 3.75px solid #FED4E0;
+            cursor: pointer;
+        }
+        
+        .contact-info-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 80%;
+            overflow-y: scroll;
+        }
+        
+        .tandem-buttons {
+            padding-left: 1vh;
+        }
+        
+        .create-and-sort {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-content: center;
+        }
+        
+        .select-sort {
+            padding: 1.75vh 0;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+        
+        .select-style {
+            padding: .75em .75em;
+            box-sizing: border-box;
+            border: none;
+            background-color: #ffffff;
+            color: #666666;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        
+        .cancel-button {
+            display: none;
+        }
+        .book-logo-right {
+            cursor: pointer;
+        }
+
+    </style>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div class="header-wrapper">
+        <div class="top-layer">
+            <h5 class="app-title">BEETBOOK</h5>
+            <a class="book-logo-right" onclick="hideWindow()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+            </a>
+        </div>
+        <div class="book-info-container" id="book-info-container-id">
+            <div class="book-title-container">
+                <div id="book-title-container-id">
+                    <div>
+                        <h1 class="book-title" id="book-title"></h1>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4 id="book-info-specs" class="book-info-specs"></h4>
+            </div>
+        </div>
+    </div>
+    <div class="body-wrapper">
+        <div class="create-and-sort">
+            <a href="#modal-window">
+                <svg id="add-new-contact" class="add-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </a>
+
+            <div class="select-sort">
+                <select class="select-style" id="select-sort" onchange="update_sort()">
+                    <option value="asc">Ascending</option>
+                    <option value="des">Descending</option>
+                    <option value="zip">Zip-Code</option>
+                </select>
+            </div>
+        </div>
+        <div id="modal-window" class="modal-box">
+            <div class="modal-content-wrapper">
+                <div class="modal-close">
+                    <h2 class="contact-title">Contact</h2>
+                    <a style="color: #666666;" href="#close">X</a>
+                </div>
+                <form id="createContact" class="contact-form-section" method="get">
+                    <div class="contact-info-wrapper">
+                        <div class="contact-input tandem-input">
+                            <div class="contact-tandem-input">
+                                <p>First Name:</p>
+                                <input id="contact-first-name" class="contact-info-input-static input-color" type="text" name="firstName" value="">
+                            </div>
+                            <div class="contact-tandem-input">
+                                <p>Last Name:</p>
+                                <input id="contact-last-name" class="contact-info-input-static input-color" type="text" name="lastName" value="">
+                            </div>
+                        </div>
+                        <div class="contact-input">
+                            <p style="padding-right: 18px;">Address 1:</p>
+                            <input id="contact-add-1" class="contact-info-input-static input-color" size="30" maxlength="30" type="text" name="addr" value="">
+                        </div>
+                        <div class="contact-input">
+                            <p style="padding-right: 18px;">Address 2:</p>
+                            <input id="contact-add-2" class="contact-info-input-static input-color" size="30" maxlength="30" type="text" name="addr2" value="">
+                        </div>
+                        <div class="contact-input tandem-input">
+                            <div class="contact-tandem-input">
+                                <p style="padding-right: 46px;">City:</p>
+                                <input id="contact-city" class="contact-info-input-static input-color" type="text" name="firstName" value="">
+                            </div>
+                            <div class="contact-tandem-input">
+                                <p>State:</p>
+                                <input id="contact-state" class="contact-info-input-static input-color" type="text" name="lastName" value="">
+                            </div>
+                        </div>
+                        <div class="contact-input">
+                            <p style="padding-right: 50px;">Zip:</p>
+                            <input id="contact-zip" class="contact-info-input-static input-color" size="30" maxlength="30" type="text" name="addr" value="">
+                        </div>
+                        <div class="contact-input">
+                            <p style="padding-right: 35px;">Phone:</p>
+                            <input id="contact-phone" class="contact-info-input-static input-color" size="30" maxlength="30" type="text" name="addr" value="">
+                        </div>
+                        <div class="contact-input">
+                            <p style="padding-right: 39px;">Email:</p>
+                            <input id="contact-email" class="contact-info-input-static input-color" size="30" maxlength="30" type="text" name="addr" value="">
+                        </div>
+                    </div>
+                    <div class="button-container">
+                        <a href="#close" onclick="submitForm()">
+                            <p class="button-layout">Submit</p>
+                        </a>
+                        <a href="#close" class="tandem-buttons">
+                            <p class="button-layout">Cancel</p>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="names-wrapper" id="names-wrapper-id">
+        </div>
+    </div>
+    <div class="footer-wrapper">
+        <h6 class="company-copyright">© 2019 Schrute Farms LLC</h6>
+    </div>
+</body>
+<script>
+    const {
+        ipcRenderer
+    } = require('electron')
+    let storage = null
+        /* API Calls */
+
+    async function sendEntry(entry) {
+        console.log(entry)
+        const response = await fetch('http://localhost:3600/edit_entry', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'entry_data': entry
+            })
+        })
+        return await response.json()
+    }
+
+    async function sendSort(id, key, order) {
+        const response = await fetch('http://localhost:3600/sort', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'id': id,
+                'sort_key': sort_key,
+                'order_by': sort_order
+            })
+        })
+
+        return await response.json()
+    }
+
+    function update_sort() {
+        sort_key = document.getElementById('select-sort').value
+        sort_order = 'asc'
+        if (sort_key === 'asc' || sort_key === 'des') {
+            sort_order = sort_key
+            sort_key = 'last_name'
+        }
+        book_id = storage.meta.address_book_id
+        sendSort(book_id, sort_key, sort_order).then((res) => {
+            getBook(res.book_id).then((res) => {
+                console.log(JSON.parse(res.result))
+                pageFill(JSON.parse(res.result))
+            })
+        })
+    }
+
+    // Fill the page contents
+    // data should be a JSON object
+    const pageFill = (data) => {
+        storage = data
+        console.log(data)
+            // Set Address Book name
+        var parsedName = data.meta.name;
+        document.getElementById('book-title').innerHTML = parsedName
+
+        // Set Address Book size
+        var parsedInfoLength = data.meta.num_entries;
+        document.getElementById('book-info-specs').innerHTML = `Address Book - ${parsedInfoLength} People`
+
+        // Map each entry
+        if (data.meta.num_entries != 0) {
+            console.log(data.entries)
+            entries = []
+            for (var key in data.entries) {
+                entries.push(data.entries[key])
+            }
+            document.getElementById('names-wrapper-id').innerHTML = ''
+            entries.map(entry => {
+                var name = entry.first_name + " " + entry.last_name;
+                var fName = entry.first_name;
+                var lName = entry.last_name;
+                var addr = entry.address_line_one;
+                var addr2 = entry.address_line_two;
+                var city = entry.city;
+                var state = entry.state;
+                var zip = entry.zip;
+                var phone = entry.phone;
+                var email = entry.email;
+                var id = entry.entry_id;
+                // DOM information below
+                var div = document.createElement('div');
+                div.innerHTML = `
+            <a href="#modal-window-${id}">
+                <div class="name-container">
+                    <h4 class="name">${name}</h4>
+                    <svg class="edit-hover contact-edit" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                </div>
+                </a>
+                <div id="modal-window-${id}" class="modal-box">
+                <div class="modal-content-wrapper">
+                    <div class="modal-close">
+                    <h2 class="contact-title">Contact</h2>
+                    <a style="color: #666666;" id = "close" onclick="cancelToggleDynamic(${id})" href="#close">X</a>
+                    </div>
+                    <form class="contact-form-section" method="get">
+                    <div class="contact-info-wrapper">
+                        <div class="contact-input tandem-input">
+                        <div class="contact-tandem-input">
+                            <p>First Name:</p>
+                            <input disabled class="contact-info-input" type="text" id="firstName-${id}" name="firstName" value="${fName}">
+                        </div>
+                        <div class="contact-tandem-input">
+                            <p>Last Name:</p>
+                            <input disabled class="contact-info-input" type="text" id="lastName-${id}" name="lastName" value="${lName}">
+                        </div>
+                        </div>
+                        <div class="contact-input">
+                        <p style="padding-right: 18px;">Address 1:</p>
+                        <input disabled class="contact-info-input" size="30" maxlength="30" type="text" id = "addr-${id}" name="addr" value="${addr}">
+                        </div>
+                        <div class="contact-input">
+                        <p style="padding-right: 18px;">Address 2:</p>
+                        <input disabled class="contact-info-input" size="30" maxlength="30" type="text" id="addr2-${id}" name="addr2" value="${addr2}">
+                        </div>
+                        <div class="contact-input tandem-input">
+                        <div class="contact-tandem-input">
+                            <p style="padding-right: 46px;">City:</p>
+                            <input disabled class="contact-info-input" type="text" id="city-${id}" name="firstName" value="${city}">
+                        </div>
+                        <div class="contact-tandem-input">
+                            <p>State:</p>
+                            <input disabled class="contact-info-input" type="text" id="state-${id}" name="lastName" value="${state}">
+                        </div>
+                        </div>
+                        <div class="contact-input">
+                        <p style="padding-right: 50px;">Zip:</p>
+                        <input disabled class="contact-info-input" size="30" maxlength="30" type="text" id="zip-${id}" name="addr" value="${zip}">
+                        </div>
+                        <div class="contact-input">
+                        <p style="padding-right: 35px;">Phone:</p>
+                        <input disabled class="contact-info-input" size="30" maxlength="30" type="text" id = "phone-${id}" name="addr" value="${phone}">
+                        </div>
+                        <div class="contact-input">
+                        <p style="padding-right: 39px;">Email:</p>
+                        <input disabled class="contact-info-input" size="30" maxlength="30" type="text" id="email-${id}" name="addr" value="${email}">
+                        </div>
+                        <!-- <svg id="add-attribute-icon-{$id}" class="add-attribute-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> -->
+                    </div>
+                    <div id="button-container" class="button-container">
+                        <a onclick="editToggle(${id})">
+                            <p id="edit-button-${id}" class="button-layout">Edit</p>
+                        </a>
+                        <a onclick="cancelToggleDynamic(${id})" href="#close" id="cancel-button-${id}" class="tandem-buttons cancel-button">
+                            <p class="button-layout">Cancel</p>
+                        </a>
+                        <a onclick="cancelToggleDynamic(${id}); sendDelete(${id});" href="#close" id="delete-button-${id}" class="tandem-buttons cancel-button">
+                            <p class="button-layout">Delete</p>
+                        </a>
+                    </div>
+                    </form>
+                </div>
+                </div>
+            `;
+                document.getElementById('names-wrapper-id').appendChild(div);
+            })
+        }
+    }
+
+    // Call API
+    const pageUpdate = () => {
+        getUpdate().then((res) =>
+            pageFill(res)
+        )
+    }
+
+    var editToggleBoolean = false;
+    const cancelToggleDynamic = (id) => {
+        if (editToggleBoolean == true) {
+            cancelStylingAppear(id);
+            var inputClassToggle = document.getElementsByClassName("contact-info-input");
+            var toggleCancelButton = document.getElementById("cancel-button-" + id).style.display = "none";
+            var toggleDeleteButton = document.getElementById("delete-button-" + id).style.display = "none";
+            var toggleEditButtonText = document.getElementById("edit-button-" + id).innerHTML = "Edit";
+            for (var i = 0; i < inputClassToggle.length; i++) {
+                inputClassToggle[i].classList.toggle("input-color");
+                inputClassToggle[i].removeAttribute("enabled")
+                inputClassToggle[i].setAttribute("disabled", "disasbled");
+            }
+            // Can't look for entries that aren't there
+            if (storage.meta.num_entries != 0) {
+                entry = storage.entries[id];
+                document.getElementById('firstName-' + id).value = entry.first_name;
+                document.getElementById('lastName-' + id).value = entry.last_name;
+                document.getElementById('addr-' + id).value = entry.address_line_one;
+                document.getElementById('addr2-' + id).value = entry.address_line_two;
+                document.getElementById('city-' + id).value = entry.city;
+                document.getElementById('state-' + id).value = entry.state;
+                document.getElementById('zip-' + id).value = entry.zip;
+                document.getElementById('phone-' + id).value = entry.phone;
+                document.getElementById('email-' + id).value = entry.email;
+            }
+        }
+        editToggleBoolean = false;
+    }
+
+    const cancelStylingAppear = (id) => {
+        // cancel
+        var cancelButtonCss = 'cancel-button-${id} { display: none}',
+            head = document.head || document.getElementsByTagName('head')[0],
+            style = document.createElement('style');
+        head.appendChild(style);
+        style.appendChild(document.createTextNode(cancelButtonCss));
+        // delete
+        var deleteButtonCss = 'delete-button-${id} { display: none}',
+            head2 = document.head || document.getElementsByTagName('head')[0],
+            style2 = document.createElement('style');
+        head2.appendChild(style);
+        style2.appendChild(document.createTextNode(deleteButtonCss));
+        return;
+    }
+
+    const editToggle = (id) => {
+        editToggleBoolean = !editToggleBoolean;
+        cancelStylingAppear(id);
+        if (editToggleBoolean) {
+            var toggleCancelButton = document.getElementById("cancel-button-" + id).style.display = "block";
+            var toggleDeleteButton = document.getElementById("delete-button-" + id).style.display = "block";
+            var toggleEditButtonText = document.getElementById("edit-button-" + id).innerHTML = "Submit";
+            var inputClassToggle = document.getElementsByClassName("contact-info-input");
+            for (var i = 0; i < inputClassToggle.length; i++) {
+                inputClassToggle[i].classList.toggle("input-color");
+                inputClassToggle[i].removeAttribute("disabled");
+                inputClassToggle[i].setAttribute("enabled", "enabled");
+            }
+        } else {
+            var toggleCancelButton = document.getElementById("cancel-button-" + id).style.display = "none";
+            var toggleDeleteButton = document.getElementById("delete-button-" + id).style.display = "none";
+            var toggleEditButtonText = document.getElementById("edit-button-" + id).innerHTML = "Edit";
+            var inputClassToggle = document.getElementsByClassName("contact-info-input");
+            var cancelToggle = document.getElementById("cancel-button-" + id);
+            for (var i = 0; i < inputClassToggle.length; i++) {
+                inputClassToggle[i].classList.toggle("input-color");
+                inputClassToggle[i].removeAttribute("enabled")
+                inputClassToggle[i].setAttribute("disabled", "disasbled");
+            }
+            //close modal
+            document.getElementById("close").click()
+            entry = storage.entries[id]
+            entry.first_name = document.getElementById('firstName-' + id).value
+            entry.last_name = document.getElementById('lastName-' + id).value
+            entry.address_line_one = document.getElementById('addr-' + id).value
+            entry.address_line_two = document.getElementById('addr2-' + id).value
+            entry.city = document.getElementById('city-' + id).value
+            entry.state = document.getElementById('state-' + id).value
+            entry.zip = document.getElementById('zip-' + id).value
+            entry.phone = document.getElementById('phone-' + id).value
+            entry.email = document.getElementById('email-' + id).value
+            console.log(entry)
+            sendEntry(entry).then((res) => {
+                getBook(storage.meta.address_book_id).then((res) => {
+                    pageFill(JSON.parse(res.result))
+                })
+            })
+        }
+        return;
+    }
+
+    /* Coming from newNameWindow */
+    ipcRenderer.on('address_book:init', (e, bookContents) => {
+        storage = bookContents
+        pageFill(bookContents)
+    })
+
+    ipcRenderer.on('address_book:open', (e) => {
+        pageUpdate()
+    })
+
+    ipcRenderer.on('address_book:close', (e) => {
+        const BrowserWindow = require('electron').remote.BrowserWindow
+        const dialog = require('electron').remote.dialog
+        const path = require('path')
+        id = storage.meta.address_book_id
+        closeBook(id).then((res) => {
+            console.log(res)
+            if (res.code === 0) {
+                BrowserWindow.getFocusedWindow().close()
+            } else if (res.code === 3) {
+                dialog.showMessageBox({
+                    type: 'warning',
+                    buttons: ['Yes', 'No'],
+                    defaultID: 0,
+                    title: 'Unsaved Changes',
+                    message: 'There are unsaved changes, would you like to save?'
+                }).then((res) => {
+                    if (res.response === 0) {
+                        saveBook(id).then((res) => {
+                            console.log(res)
+                            if (res.code === -3) {
+                                dialog.showSaveDialog().then((res) => {
+                                    console.log(res)
+                                    info = path.parse(res.filePath)
+                                    name = info.name
+                                    filename = path.join(info.dir, name + '.json')
+                                    console.log(name, filename)
+                                    saveBook(id, filename, name).then((res) => {
+                                        BrowserWindow.getFocusedWindow().close()
+                                    })
+                                })
+                            } else {
+                                BrowserWindow.getFocusedWindow().close()
+                            }
+                        })
+                    } else {
+                        closeBook(id, true).then((res) => {
+                            BrowserWindow.getFocusedWindow().close()
+                        })
+                    }
+                })
+            }
+        })
+    })
+
+    async function closeBook(id, force = false) {
+        console.log(id, force)
+
+        request = {
+            'id': id,
+            'force': force
+        }
+        console.log(JSON.stringify(request))
+
+        const response = await fetch('http://localhost:3600/close', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(request)
+        })
+
+        return await response.json()
+    }
+
+    /* Contact form */
+    async function newEntry(id, entry) {
+        console.log(JSON.stringify({
+            'book_id': id,
+            'entry_data': entry
+        }))
+
+        const response = await fetch('http://localhost:3600/new_entry', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                book_id: id,
+                entry_data: entry
+            })
+        })
+        return await response.json()
+    }
+
+    // Request the address book based on id
+    async function getBook(id) {
+        const response = await fetch('http://localhost:3600/book', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "id": Number(id)
+            })
+        })
+        return await response.json()
+    }
+    async function deleteEntry(book_id, entry_id) {
+        const response = await fetch('http://localhost:3600/delete_entry', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'book_id': Number(book_id),
+                'entry_id': entry_id
+            })
+        })
+        return await response.json()
+    }
+    const submitForm = () => {
+        let id = Number(storage.meta.address_book_id)
+            // No empty contacts allowed
+        if (document.getElementById('contact-first-name').value === "" ||
+            document.getElementById('contact-last-name').value === "" ||
+            document.getElementById('contact-zip').value === "") {
+            alert('First Name, Last Name, and Zip required.')
+            document.getElementById('createContact').reset()
+            return
+        }
+        const entry = {
+            "first_name": `${document.getElementById('contact-first-name').value}`,
+            "last_name": `${document.getElementById('contact-last-name').value}`,
+            "address_line_one": `${document.getElementById('contact-add-1').value}`,
+            "address_line_two": `${document.getElementById('contact-add-2').value}`,
+            "city": `${document.getElementById('contact-city').value}`,
+            "state": `${document.getElementById('contact-state').value}`,
+            "zip": `${document.getElementById('contact-zip').value}`,
+            "phone": `${document.getElementById('contact-phone').value}`,
+            "email": `${document.getElementById('contact-email').value}`
+        }
+        newEntry(id, entry).then((res) => {
+            console.log(res)
+
+            getBook(res.id).then((res) => {
+                console.log(res)
+                pageFill(JSON.parse(res.result))
+            })
+        })
+
+        document.getElementById('createContact').reset()
+    }
+
+    const sendDelete = (id) => {
+            const book_id = storage.meta.address_book_id
+            deleteEntry(book_id, id).then((res) => {
+                getBook(res.book_id).then((res) => {
+                    console.log(res)
+                    pageFill(JSON.parse(res.result))
+                })
+            })
+        }
+        /* Custom Field Modal*/
+    ipcRenderer.on('custom_field:add', (e, parent, customField) => {
+        return
+    })
+
+    ipcRenderer.on('address_book:save', (e, filename = '') => {
+        id = storage.meta.address_book_id
+        console.log(id)
+        const dialog = require('electron').remote.dialog
+        saveBook(id, filename, storage.meta.name).then((res) => {
+            if (res.code === -3) {
+                const BrowserWindow = require('electron').remote.BrowserWindow
+                BrowserWindow.getFocusedWindow().webContents.send('address_book:save_as')
+            }
+        })
+    })
+
+    ipcRenderer.on('address_book:save_as', (e) => {
+        const dialog = require('electron').remote.dialog
+        dialog.showSaveDialog().then((res) => {
+            // Sanitize
+            if (res.canceled === false) {
+                const path = require('path')
+                info = path.parse(res.filePath)
+                book_name = info.name
+                filename = path.join(info.dir, book_name + '.json')
+                saveBook(storage.meta.address_book_id, filename, book_name).then((res) => {
+                    getBook(storage.meta.address_book_id).then((res) => {
+                        console.log(res)
+                        pageFill(JSON.parse(res.result))
+                    })
+                })
+            }
+        })
+    })
+
+    async function saveBook(id, filename = '', book_name = '') {
+        request = {
+            'id': id,
+        }
+        if (filename !== '' && book_name !== '') {
+            request['filename'] = filename
+            request['book_name'] = book_name
+        }
+        console.log(JSON.stringify(request))
+        const response = await fetch('http://localhost:3600/save', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(request)
+        })
+        return await response.json()
+    }
+
+    const onSave = (entry) => {
+        // Call sendEntry with updated entry json object
+        sendEntry(entry)
+    }
+
+    // /import 
+    // + Imports a TSV list of addresses into an open address book. 
+    // Returns the id of the address book imported into
+    async function importBook(filename, id) {
+        const response = await fetch('http://localhost:3600/import', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'filename': filename,
+                'id': id
+            })
+        })
+        return await response.json()
+    }
+
+    ipcRenderer.on('importBook', (e, filepath) => {
+        const id = storage.meta.address_book_id
+        importBook(filepath, id).then((res) => {
+            if (res.code != 0) {
+                alert("Error Importing TSV")
+                return
+            }
+            getBook(res.id).then((res) => {
+                pageFill(JSON.parse(res.result))
+            })
+        })
+    })
+
+    // Clicking the book icon refocuses the mainWindow
+    const hideWindow = () => {
+            ipcRenderer.send('reFocus')
+        }
+        // /export
+        //+ Attempts to export a list of entries from an open address book to a file
+    async function exportBook(book_id, filename, entry_ids) {
+        const response = await fetch('http://localhost:3600/export', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'book_id': book_id,
+                'filename': filename,
+                'entry_ids': entry_ids
+            })
+        })
+        return await response.json()
+    }
+
+    ipcRenderer.on('exportBook', (e, filepath) => {
+        console.log(`i got this: ${filepath}`)
+        console.log(storage)
+        if (storage.meta.num_entries === 0) {
+            alert("Nothing to export.")
+            return
+        }
+        let entry_ids = []
+        for (entry in storage.entries) {
+            entry_ids.push(storage.entries[entry].entry_id)
+        }
+        const id = storage.meta.address_book_id
+        exportBook(id, filepath, entry_ids).then((res) => {
+            console.log("In exportBook and result is:")
+            console.log(res)
+            if (res.code != 0) {
+                alert("Error Exporting TSV")
+                return
+            }
+            if (res == undefined) {
+                alert("Canceled Export")
+            } else if (res) {
+                alert("Successfully Exported if you hit submit. Successfully canceled if you pushed cancel. (button clicks in dialogs are handled equally. This is a known issue in Electron)")
+            } else {
+                console.log('Canceled')
+            }
+        })
+    })
+
+</script>
+
+</html>

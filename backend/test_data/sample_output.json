@@ -1,0 +1,99 @@
+{
+    "meta": {
+        "name": "Test Book 1",
+        "num_entries": 2,
+        "book_id": 0
+    },
+    "entries": {
+        "0": {
+            "entry_id": 0,
+            "address_book_id": 0,
+            "first_name": "Dwight",
+            "last_name": "Schrute",
+            "address_line_one": "1234 Slough Ave",
+            "address_line_two": "Suite 300",
+            "city": "Scranton",
+            "state": "PA",
+            "zip": "18505",
+            "phone": "(570) 123-4567",
+            "email": "dschrute@dundermifflin.com",
+            "custom_fields": {
+                "notes": {
+                    "label": "Notes",
+                    "value": "sells beets on the side",
+                    "global": false,
+                    "applied_globally": false
+                }
+            }
+        },
+        "1": {
+            "entry_id": 1,
+            "address_book_id": 0,
+            "first_name": "Jim",
+            "last_name": "Halpert",
+            "address_line_one":"1234 Slough Ave",
+            "address_line_two": "Suite 300",
+            "city": "Scranton",
+            "state": "PA",
+            "zip": "18505",
+            "phone":"(570) 123-4568",
+            "email": "jhalpert@dundermifflin.com",
+            "custom_fields": {
+                "nickname": {
+                    "label": "Nickname",
+                    "value": "Tuna",
+                    "global": false,
+                    "applied_globally": false
+                }
+            }
+        },
+        "2": {
+            "entry_id": 2,
+            "address_book_id": 0,
+            "first_name": "Pam",
+            "last_name": "Halpert",
+            "address_line_one":"1234 Slough Ave",
+            "address_line_two": "Suite 300",
+            "city": "Scranton",
+            "state": "PA",
+            "zip": "18505",
+            "phone": "(570) 123-4569",
+            "email": "pbeesley@dundermifflin.com",
+            "custom_fields": {
+                "married_to": {
+                    "label": "Married To",
+                    "value": "Jim Halpert",
+                    "global": false,
+                    "applied_globally": false
+                }
+            }
+        },
+        "3": {
+            "entry_id": 3,
+            "address_book_id": 0,
+            "first_name": "Angela",
+            "last_name": "Martin",
+            "address_line_one":"1234 Slough Ave",
+            "address_line_two": "Suite 300",
+            "city": "Scranton",
+            "state": "PA",
+            "zip": "18505",
+            "phone": "(570) 123-4570",
+            "email": "amartin@dundermifflin.com",
+            "custom_fields": {
+                "nickname": {
+                    "label": "Nickname",
+                    "value": "Monkey",
+                    "global": false,
+                    "applied_globally": false
+                },
+                "notes": {
+                    "label": "Notes",
+                    "value": "short; shrill voice",
+                    "global": false,
+                    "applied_globally": false
+                }
+            }
+        }
+    }
+}

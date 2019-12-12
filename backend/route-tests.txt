@@ -1,0 +1,100 @@
+route tests
+===========
+/
+    SEND: {}
+        WANT: {'code': 0, 'message': 'success', 'result': ['Fname', 'Lname', ...]}
+
+/new
+    SEND: {'name': <string:name>}
+        WANT: {'code': 0, 'message': 'success', 'id': <int:book_id>}
+    SEND: {}
+        WANT: {'code': -3, 'message': 'name must be provided', 'id': -1}
+    SEND: {'name': ''}
+        WANT: {'code': -2', 'message': 'name cannot be empty', 'id': -1}
+
+/open
+    SEND: {'filename': <string:filename>}
+        WANT: {'code': 0, 'message': 'success', 'id': <int:book_id>}
+    SEND: {'filename': <string:badfilename>}
+        WANT: {'code': -1, 'message': 'error reading file: <badfilename>', 'id': <int:book_id>}
+    SEND: {}
+        WANT: {'code': -3, 'message': 'filename must be provided', 'id': -1}
+    SEND: {'filename': ''}
+        WANT: {'code': -2, 'message': 'filename cannot be empty', 'id': -1}
+
+/import
+    SEND: {'id': <int:book_id>, 'filename': <string:filename>}
+    SEND: {'id': 'asdf', 'filename': <string:filename>}
+    SEND: {'id': -1, 'filename': <string:filename>}
+    SEND: {'id': <int:book_id>, 'filename': <string:filename>}
+    SEND: {'id': <int:book_id>}
+    SEND: {'id': <int:book_id>, 'filename': ''}
+
+/book
+    with valid id
+    with non-int id
+    with invlalid id
+
+/new_entry
+    with valid id
+    with non-int id
+    with invalid id
+    with entry data
+    without entry data
+
+/close
+    with valid id
+    with non-int id
+    with invalid id
+    with valid force
+    without force
+    with invalid force
+    with changes made
+    without changes made
+
+/save
+    with valid id
+    with non-int id
+    with invalid id
+    with valid filename
+    without filename
+    with invalid filename
+
+/delete_entry
+    with valid book_id
+    with invalid book_id
+    with non-int book_id
+    with valid entry_id
+    with invalid entry_id
+    with non-int entry_id
+
+/edit_entry
+    with valid book_id
+    with invalid book_id
+    with non-int book_id
+    with valid entry_id
+    with invalid entry_id
+    with non-int entry_id
+    with entry_data
+    without entry_data
+
+/export
+    with valid book_id
+    with invalid book_id
+    with non-int book_id
+    with valid filename
+    with invalid filename
+    without filename
+    with entry_ids
+    without entry_ids
+
+/sort
+    with valid book_id
+    with invalid book_id
+    with non-int book_id
+    with valid key
+    with invalid key
+    without key
+    with valid order_by
+    with invalid order_by
+    without order_by

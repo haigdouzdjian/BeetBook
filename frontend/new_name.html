@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .content-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: none;
+        }
+
+        .label-input-container {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            flex-direction: column;
+        }
+
+        .addr-title {
+            font-weight: 700;
+            padding-bottom: 5vh;
+        }
+
+        input {
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-content: center;
+            padding-top: 7.5vh;
+        }
+
+        button {
+            background-color: #ffffff;
+            border: 3px solid #FED4E0;
+            cursor: pointer;
+        }
+
+        .create-button {
+            margin-right: 2vw;
+        }
+
+    </style>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <form>
+        <div class="content-container">
+            <div class="label-input-container">
+                <label class="addr-title">Address Book Name:</label>
+                <input type="text" id="book_name" name="book_name" autofocus>
+            </div>
+            <div class="button-container">
+                <button class="create-button" type="submit" value="Submit">Create</button>
+                <button type="button" onclick="javascript:window.close()">Cancel</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        const { ipcRenderer } = require('electron')
+        const form = document.querySelector('form')
+
+        // Tell the API to create a new address book
+        // with this name
+        async function createBook(bookName) {
+            const response = await fetch('http://localhost:3600/new', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "name": bookName
+                })
+            })
+            return await response.json()
+        }
+
+        // Request the address book based on id
+        async function getBook(id) {
+            const response = await fetch('http://localhost:3600/book', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "id": Number(id)
+                })
+            })
+            return await response.json()
+        }
+        // This will run when we submit the form
+        const submitForm = (e) => {
+            e.preventDefault()
+            const bookName = document.querySelector('#book_name').value
+                // Tell the API to create a new book
+            createBook(bookName).then((res) => {
+                // Get the new book from the API
+                console.log(res)
+                getBook(res.id).then((res) => {
+                    console.log(res)
+                    ipcRenderer.send('address_book:create', res.result)
+                })
+            })
+        }
+
+        // Listening for when the form is submitted.
+        form.addEventListener('submit', submitForm)
+
+    </script>
+</body>
+
+</html>

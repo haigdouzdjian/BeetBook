@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add A Custom Field</title>
+</head>
+<body>
+    <form>
+        <div>
+            <label>Field Name:</label>
+            <input type="text" id="name" autofocus>
+            <label>Value:</label>
+            <input type="text" id="value"><br>
+            <input type="checkbox" id="global">Apply custom field to entire address book
+        </div>
+        <div>
+            <button type="button" onclick="javascript:window.close()">Cancel</button>
+            <button type="submit">Add Field</button>
+        </div>
+    </form>
+    <script>
+        const {ipcRenderer} = window.require('electron');
+
+        const form = document.querySelector('form')
+        form.addEventListener('submit', submitForm)
+
+        function submitForm(e){
+            e.preventDefault();
+            const value = document.querySelector('#value').value
+            const name = document.querySelector('#name').value
+            const global = document.querySelector('#global').checked
+            let parent
+            // below works like socket io. giving name and sending data
+            // catching on main.js
+            ipcRenderer.on('field:modal', (e, modal_id) => {
+                parent = modal_id
+            })
+            ipcRenderer.send('field:add', value, name, parent, global)
+        }
+    </script>
+</body>
+</html>

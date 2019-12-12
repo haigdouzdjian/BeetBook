@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
+    <style>
+        body {
+        margin: 0;
+        font-family: 'Lato', sans-serif;
+        color: grey
+        }
+        .app-title {
+        font-weight: 900;
+        padding: 1vh 0;
+        color: #000000;
+        }
+        .top-layer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2.5vw 5vw;
+        }
+        .app-container {
+        /* display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start; */
+        padding: 35px 60px;
+        }
+        .form {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        }
+        .line-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 1vh 0;
+        align-items: center;
+        }
+        .buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 1vh 0;
+        align-items: center;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CONTACT</title>
+</head>
+<body>
+    <div class="app-container">
+        <div class="top-layer">
+            <h1 class="app-title">CONTACT</h1><br>
+        </div>
+        <div class="form">
+            <form>
+                <div class='line-container'>
+                    First Name:
+                    <input type="text" name="first_name" value="Dwight">
+                    Last Name:
+                    <input type="text" name="last_name" value="Schrute">
+                </div> 
+                <div class='line-container'> 
+                        Address 1:
+                        <input type="text" name="address1" size="55" value="123 Farms Blvd">
+                </div>
+                <div class='line-container'> 
+                        Address 2:
+                        <input type="text" name="address2" size="55">
+                </div>
+                <div class='line-container'> 
+                        City:
+                        <input type="text" name="city" value="Scranton">
+                        State:
+                        <input type="text" name="state" value="PA">
+                </div>
+                <div class='line-container'> 
+                        Zip Code:
+                        <input type="text" name="zip" size="55" value="18503">
+                </div>
+                <div class='line-container'> 
+                        Phone:
+                        <input type="text" name="phone" size="55" value="123-555-5555">
+                </div>
+                <div class='line-container'> 
+                        Email:
+                        <input type="text" name="email" size="55" value="dwight.s@shcrutefarmsllc.com">
+                </div>
+                <div class='buttons'> 
+                        <button type="button" form="form1" value="Edit">Edit</button>
+                        <button type="button" form="form1" value="Delete">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

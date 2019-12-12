@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+        }
+        
+        .app-title {
+            font-weight: 900;
+            letter-spacing: 15px;
+        }
+        
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .child-wrapper {
+            display: flex;
+            background-color: #f4f4f4;
+            align-items: center;
+            width: 82.5vw;
+            height: 82.5vh;
+            justify-content: space-around;
+        }
+        
+        .child-new {
+            margin-left: 15vw;
+            width: 25vw;
+            height: 35vh;
+            margin-bottom: 10vh;
+            align-items: center;
+            background-color: #9371E6;
+            color: white;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+        }
+        
+        .child-open {
+            margin-right: 15vw;
+            width: 25vw;
+            height: 35vh;
+            margin-top: 10vh;
+            align-items: center;
+            background-color: #FED4E0;
+            color: black;
+            text-align: right;
+            justify-content: space-around;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+        }
+        
+        .aside-right {
+            background: gold;
+        }
+        
+        .aside-left {
+            background: silver;
+        }
+        
+        .child-new-text {
+            padding: 35px 60px;
+        }
+        
+        .child-open-text {
+            padding: 35px 60px;
+        }
+        
+        .child-font {
+            font-weight: 400;
+            font-size: 21.5px;
+        }
+        
+        .create-arrow {
+            padding: 2vh 2vw;
+        }
+        
+        .create-arrow-button {
+            padding: 1vh 1.5vw;
+            border: 3px solid #ffffff;
+        }
+        
+        .open-arrow-button {
+            padding: 1vh 1.5vw;
+            border: 3px solid #000000;
+        }
+
+    </style>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div class="wrapper">
+        <h5 class="app-title">BEETBOOK</h5>
+        <div class="child-wrapper">
+            <div class="child-new">
+                <div class="child-new-text">
+
+                    <h3 class="child-font"> Create a <br />new <br />address book</h3>
+                    <div class="create-arrow">
+                        <a href="" onclick="clicked_new(this)">
+                            <svg class="create-arrow-button" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="child-open">
+                <div class="child-open-text">
+                    <h3 class="child-font"> Open an <br />existing <br />address book</h3>
+                    <div class="create-arrow">
+                        <a href="" onclick="clicked_open(this)">
+                            <svg class="open-arrow-button" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const {
+            ipcRenderer
+        } = require('electron')
+
+        function clicked_new() {
+            const {
+                remote
+            } = require('electron')
+            const {
+                ipcRenderer
+            } = window.require('electron');
+            ipcRenderer.send('newBook')
+        }
+
+        function clicked_open() {
+            // console.log("Got here")
+            const {
+                ipcRenderer
+            } = window.require('electron');
+            ipcRenderer.send('openFile', () => {
+                console.log("Event sent.");
+            })
+        }
+
+        // ipcRenderer.on('openFile', (event, data) => {
+        //     console.log(data)
+        // })
+
+    </script>
+</body>
+
+</html>

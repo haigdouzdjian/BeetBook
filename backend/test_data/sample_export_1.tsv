@@ -1,0 +1,5 @@
+first_name	last_name	address_line_one	address_line_two	city	state	zip	phone	email
+Dwight	Schrute	1234 Slough Ave	Suite 300	Scranton	PA	18505	(570) 123-4567	dschrute@dundermifflin.com	notes	Notes	sells beets on the side
+Jim	Halpert	1234 Slough Ave	Suite 300	Scranton	PA	18505	(570) 123-4568	jhalpert@dundermifflin.com	nickname	Nickname	Tuna
+Pam	Halpert	1234 Slough Ave	Suite 300	Scranton	PA	18505	(570) 123-4569	pbeesley@dundermifflin.com	married_to	Married To	Jim Halpert
+Angela	Martin	1234 Slough Ave	Suite 300	Scranton	PA	18505	(570) 123-4570	amartin@dundermifflin.com	nickname	Nickname	Monkey	notes	Notes	short; shrill voice
